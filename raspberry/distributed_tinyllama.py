@@ -1,21 +1,8 @@
-
-
 import ollama
 import ray
 import sys
 print(sys.path)
-# from llama_index.llms.ollama import Ollama
-# from llama_index.core import Settings
-# from llama_index.legacy.llms.ollama import Ollama
-# from llama_index.llms import Ollama
-# import ollama
-
-# Ollama uygulamasını başlat ve model belirle
-# ollama = Ollama(model="llama2-uncensored:latest")
-# llm = Ollama(model="tinyllama", request_timeout=60.0)
-
-
-# Ray'ı başlat
+# Ray'ı başlatl
 ray.init(address='auto')
 
 # TinyLlama modeli yükle
