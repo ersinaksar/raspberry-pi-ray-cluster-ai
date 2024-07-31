@@ -108,11 +108,15 @@ ollama run tinyllama
 ```
 
 ```bash
+pip uninstall ray
+pip show ray
+pip show ray llama-index-llms-ollama
 sudo apt install python3.12-venv
 python3 -m venv .venv
 source .venv/bin/activate
-pip install ray 
+pip install ray==2.34.0
 ```
+
 
 
 ### Ray cluster başlat
@@ -189,6 +193,7 @@ multipass list
 - Ray Worker Node'u Ubuntu VM'de Başlatma
 ```bash
 multipass shell my-ubuntu-vm
+multipass shell incisive-poodle
 ```
 
 - Sanal makinede:
@@ -217,6 +222,9 @@ source .venv/bin/activate
 pip install ray==2.32.0
 deactivate
 ```
+Ray: 2.32.0
+Python: 3.10.14
+
 
 #### Mac Üzerinde Ray Head Node'u Başlatma
 ```bash
@@ -287,6 +295,7 @@ script sadece Mac bilgisayarınızda bulunacak ve buradan çalıştırılacak. �
 1. Ray Cluster'ı Başlatma
 - Mac Üzerinde Ray Head Node'u Başlatma
 ```bash
+ray stop
 ray start --head --node-ip-address=192.168.0.4 --port=6379 --dashboard-host 0.0.0.0
 ray start --head --node-ip-address=192.168.0.4 --port=6379 --dashboard-host 0.0.0.0 --dashboard-port 8265
 
@@ -297,3 +306,20 @@ ray start --address='192.168.0.4:6379'
 ```
 2. Dağıtık Python Script'ini Oluşturma ve Çalıştırma
 - distributed_tinyllama.py script'ini Mac bilgisayarınızda çalıştırarak 
+```bash
+pip install git+https://github.com/ollama/ollama-python.git
+pip install llama-index-llms-ollama 
+pip install llama-index qdrant_client torch transformers
+
+pip install llama_index
+```
+
+3. Script'i Çalıştırma
+```bash
+echo "What is the use case of div tag in html?" | python distributed_tinyllama.py
+```
+
+4. Ray Dashboard ve İzleme
+```bash
+http://192.168.0.4:8265
+```
