@@ -40,10 +40,19 @@ setup_ssh_config() {
     # SSH konfigürasyon dosyasına giriş ekleme
     SSH_CONFIG="$HOME/.ssh/config"
     
-    if [ ! -f "$SSH_CONFIG" ]; then
-        touch "$SSH_CONFIG"
+    # .ssh dizinini oluşturma
+    if [ ! -d "$HOME/.ssh" ]; then
+        mkdir "$HOME/.ssh"
+        chmod 700 "$HOME/.ssh"
     fi
     
+    # SSH konfigürasyon dosyasını oluşturma
+    if [ ! -f "$SSH_CONFIG" ]; then
+        touch "$SSH_CONFIG"
+        chmod 600 "$SSH_CONFIG"
+    fi
+    
+    # SSH konfigürasyon dosyasına giriş ekleme
     grep -qxF "Host $HOSTNAME" "$SSH_CONFIG" || {
         echo "Host $HOSTNAME" >> "$SSH_CONFIG"
         echo "    HostName $HOSTNAME.local" >> "$SSH_CONFIG"
