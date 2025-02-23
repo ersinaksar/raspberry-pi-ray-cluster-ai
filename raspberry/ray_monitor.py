@@ -4,7 +4,7 @@ from rich.console import Console
 from rich.table import Table
 
 def main():
-    # Ray kümesine bağlan
+    # connect to Ray cluster
     ray.init(address='auto')
     
     console = Console()
@@ -12,7 +12,7 @@ def main():
     while True:
         console.clear()
         
-        # Mevcut tüm düğümlerin durumunu ve kaynak kullanımını al
+        # get all status and source usages of the nodes
         nodes = ray.nodes()
         
         table = Table(title="Ray Cluster Nodes Status")
@@ -31,7 +31,7 @@ def main():
         
         console.print(table)
         
-        # 5 saniye bekle ve verileri güncelle
+        # wait 5 secand update the data
         time.sleep(5)
 
 if __name__ == "__main__":
