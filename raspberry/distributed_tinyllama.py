@@ -2,10 +2,10 @@ import ollama
 import ray
 import sys
 print(sys.path)
-# Ray'ı başlatl
+# start ray
 ray.init(address='auto')
 
-# TinyLlama modeli yükle
+# upload TinyLlama model 
 
 
 @ray.remote
@@ -33,7 +33,7 @@ def main():
     # llm = Ollama(model="tinyllama")
     input_text = sys.stdin.read().strip()
 
-    # Model instance'ı oluştur ve input'u işlemeye başla
+    # create Model instance and start to precess input
     tiny_llama = TinyLlamaModel.remote()
     response = ray.get(tiny_llama.predict.remote(input_text))
 
