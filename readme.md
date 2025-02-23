@@ -1,40 +1,40 @@
-### Raspberry Pi’nizin IP adresi görünmüyor olabilir veya bağlantıda bir sorun olabilir. Bağlantıyı doğrulamak ve tekrar denemek için aşağıdaki adımları izleyebilirsiniz:
+### Your Raspberry Pi’s IP Address May Not Be Visible or There May Be a Connection Issue. You can follow the steps below to verify the connection and try again:
 
-1. Raspberry Pi’yi Yeniden Başlatma
+1. Restarting the Raspberry Pi
 
-	•	Raspberry Pi’yi yeniden başlatın ve Ethernet kablosu ile Mac’e bağlı olduğundan emin olun.
+	•	Restart your Raspberry Pi and make sure it is connected to your Mac via an Ethernet cable.
 
-2. IP Adresini Tekrar Kontrol Etme
+2. Checking the IP Address Again
 
-	•	Terminal’de aşağıdaki komutu tekrar çalıştırarak bağlı cihazları kontrol edin:
+	•	Run the following command in the terminal again to check connected devices:
 
 ```bash 
 arp -a
 ``` 
-3. mDNS Kullanarak Bağlanma
+3. mDNS Connecting Using
 
-	•	Raspberry Pi’niz station1.local adıyla da bağlanabilir. Aşağıdaki komutu deneyin:
+	•	Your Raspberry Pi may also be accessible via station1.local. Try the following command:
 ```bash 
 ssh pi@station1.local
 ``` 
-4. IP Adresini Manuel Bulma
+4. Manually Finding the IP Address
 
-	•	Eğer hala IP adresini bulamıyorsanız, Raspberry Pi’de şu komutu çalıştırarak IP adresini öğrenebilirsiniz:
+	•	If you still cannot find the IP address, run the following command on your Raspberry Pi to retrieve its IP address:
 ```bash
 hostname -I
 ``` 
-Bu komut size Raspberry Pi’nin bağlı olduğu ağdaki IP adresini verecektir.
+This Command Will Display the IP Address of Your Raspberry Pi on the Network
 
-5. IP Adresi ile Bağlanma
+5. Connecting via IP Address
 
-	•	IP adresini öğrendikten sonra, Mac Terminal’de SSH ile bağlanmak için aşağıdaki komutu kullanın:
+	•	Once you have retrieved the IP address, use the following command in the Mac Terminal to connect via SSH:
 ```bash 
 ssh pi@[bulduğunuz_ip_adresi]
 ```
-Eğer bu adımlar sorunları çözmezse, bağlantıda başka bir problem olabilir. Bu durumda, bağladığınız kabloyu ve ağ ayarlarını tekrar kontrol edebilir ya da farklı bir yöntem (Wi-Fi ile bağlantı gibi) deneyebilirsiniz. Herhangi bir sorunda tekrar bana yazabilirsiniz.
+If these steps do not resolve the issue, there might be another connection problem. In that case, you can check the cable connection and network settings again or try a different method (such as connecting via Wi-Fi). Feel free to reach out if you need further assistance.
 
 
-#### Raspi güncellemeleri
+#### Raspberry Pi Updates
 ```bash
 sudo apt-get update --allow-releaseinfo-change
 sudo apt-get update
@@ -78,12 +78,12 @@ sudo apt-get install apt-transport-https ca-certificates curl gnupg2 lsb-release
 
 ```
 
-#### 1. DNS Ayarlarını Kontrol Etme
+#### 1. Checking DNS Settings
 sudo nano /etc/resolv.conf
 
-Dosyaya aşağıdaki satırları ekleyin
+Add the following lines to the file:
 
-Google DNS sunucuları
+Google DNS Servers
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 
@@ -91,8 +91,8 @@ Cloudflare DNS
 nameserver 1.1.1.1
 nameserver 1.0.0.1
 
-#### 2. Paket Listesini Güncelleme
-DNS ayarlarını değiştirdikten sonra, paket listesini güncelleyip eksik paketleri tekrar yüklemeyi deneyin:
+#### 2. Updating the Package List
+After changing the DNS settings, update the package list and try reinstalling any missing packages:
 ```bash 
 sudo apt-get update
 sudo apt-get install docker-ce
@@ -119,9 +119,9 @@ pip install ray==2.34.0
 
 
 
-### Ray cluster başlat
-#### Mac Üzerinde Ray Head Node Başlatma
-#### Mac bilgisayarınızın IP adresini bul
+### Starting the Ray Cluster
+#### Starting the Ray Head Node on Mac
+#### Find Your Mac’s IP Address
 
 ```bash
 ifconfig
@@ -150,19 +150,19 @@ Next steps
 
 
 
-en0 arayüzünün altındaki inet satırında IP adresinizi görebilirsiniz. Örnek olarak, IP adresiniz 192.168.1.100 olsun.
+You can find your IP address under the inet line of the en0 interface.
 
 
-#### Ubuntu Sanal Makinesinde Ray Worker Node'u Başlatma
-#### Ray worker node'unu Mac'inizin IP adresine bağlanacak şekilde başlatı
-#### Doğru IP Adresi ile Ray Head Node'u Başlatma
+#### For example, your IP address might be 192.168.1.100
+#### Starting the Ray Worker Node on an Ubuntu Virtual Machine
+#### Starting the Ray Worker Node to Connect to Your Mac’s IP Address
 ```bash
 ray start --address='192.168.1.100:6379'
 ray start --address='MAC_IP_ADDRESS:6379'
 ray start --head --node-ip-address=192.168.0.4 --port=6379
 ```
 
-#### Dağıtık Python Script'i Oluşturma ve Çalıştırma
+#### Creating and Running a Distributed Python Script
 ```bash
 echo "Your input text here" | python distributed_tinyllama.py
 ```
@@ -177,26 +177,26 @@ ray start --head --port=6379 --log-to-driver
 ray start --address='192.168.0.4:6379' --log-to-driver
 ```
 
-### Multipass İçinde Köprülü Ağ Yapılandırma
-- Multipass GUI'yi açın ve "Settings" bölümüne gidin. "Virtualization" altında, "Bridged network" ayarını en0 (veya aktif ağ arayüzünüz) olarak ayarlayın
+### Configuring a Bridged Network in Multipass
+- Open the Multipass GUI and go to the “Settings” section. Under “Virtualization”, set the “Bridged network” option to en0 (or your active network interface).
 
-- Yeni Ubuntu VM Oluşturun
+- Creating a New Ubuntu VM
 ```bash
 multipass launch --network en0 --name my-ubuntu-vm
 ```
 
-- IP Adreslerini Kontrol Edin
+- Check the IP Addresses.
 ```bash 
 multipass list
 ```
 
-- Ray Worker Node'u Ubuntu VM'de Başlatma
+- Start the Ray Worker Node on the Ubuntu VM.
 ```bash
 multipass shell my-ubuntu-vm
 multipass shell incisive-poodle
 ```
 
-- Sanal makinede:
+- On the Virtual Machine:
 ```bash
 sudo apt update
 sudo apt install python3-pip
@@ -210,7 +210,7 @@ python --version
 ray --version
 ```
 
-### Ubuntu Sanal Makinenizde Python ve Ray Sürümünü Düşürme
+### Downgrading Python and Ray Version on Ubuntu Virtual Machine
 ```bash
 sudo apt update
 sudo apt install software-properties-common
@@ -226,86 +226,86 @@ Ray: 2.32.0
 Python: 3.10.14
 
 
-#### Mac Üzerinde Ray Head Node'u Başlatma
+#### Starting the Ray Head Node on Mac
 ```bash
 ray stop
 ray start --head --node-ip-address=192.168.0.4 --port=6379
 ```
-#### Ubuntu Sanal Makinesinde Ray Worker Node'u Başlatma
+#### Starting the Ray Worker Node on Ubuntu Virtual Machine
 ```bash
 ray start --address='192.168.0.4:6379'
 ```
 
-#### Ray Dashboard'u Kullanma
+#### Using the Ray Dashboard
 ```bash
 pip install -U "ray[default]"
 ```
-1. Ray Dashboard'u Başlatma
+1. Starting the Ray Dashboard
 ```bash
 ray start --head --node-ip-address=192.168.0.4 --port=6379 --dashboard-host 0.0.0.0
 ```
-2. Dashboard'a Erişim
+2. Accessing the Dashboard
 
 ```bash
 http://192.168.0.4:8265
 ```
-- Ray Dashboard'un Başlatıldığından Emin Olun
+- Ensure the Ray Dashboard is Running
 ```bash
 ray stop
 ray start --head --node-ip-address=192.168.0.4 --port=6379 --dashboard-host 0.0.0.0
 ```
-- Dashboard Portunu ve IP Adresini Kontrol Edin
+- Check the Dashboard Port and IP Address
 ```bash
 ray start --head --node-ip-address=192.168.0.4 --port=6379 --dashboard-host 0.0.0.0 --dashboard-port 8888
 ```
-- Bu durumda, Dashboard'a şu URL'den erişmelisiniz:
+- In this case, you should be able to access the Dashboard at the following URL:
 ```bash
 http://192.168.0.4:8888
 ```
-- Firewall ve Ağ Ayarlarını Kontrol Edin
-Mac bilgisayarınızdaki firewall ayarlarının Dashboard'a erişimi engellemediğinden emin olun. Ayrıca, Mac ve Ubuntu sanal makinenizin aynı ağda olduğundan ve birbirlerine erişebildiklerinden emin olun.
-- Ray Dashboard'un Durumunu Kontrol Edin
-Ray Dashboard'un başlatılıp başlatılmadığını ve hangi portta çalıştığını kontrol etmek için Ray'ın durum komutlarını kullanabilirsiniz:
+- Check Firewall and Network Settings
+Ensure that the firewall settings on your Mac are not blocking access to the Dashboard. Also, verify that your Mac and Ubuntu virtual machine are on the same network and can communicate with each other.
+- Check the Status of the Ray Dashboard
+Use Ray’s status commands to check if the Ray Dashboard is running and on which port:
 ```bash 
 ray status
 ```
-- Ray Dashboard'u Manuel Olarak Başlatın 
-Ray Dashboard'u manuel olarak başlatmayı deneyin:
-1. Ray head node'unu başlatın (Dashboard olmadan):
+- Manually Starting the Ray Dashboard 
+Try starting the Ray Dashboard manually:
+1. Start the Ray Head Node (without the Dashboard):
 ```bash
 ray stop
 ray start --head --node-ip-address=192.168.0.4 --port=6379 --include-dashboard=false
 
 ```
-2. Dashboard'u ayrı bir terminal penceresinde başlatın:
+2. Start the Dashboard in a separate terminal window:
 ```bash
 ray dashboard --port 8265
 
 ray dashboard http://192.168.0.4:8265
 ```
 
--  Ray Dashboard Loglarını Kontrol Edin
-Dashboard'un neden başlatılmadığını anlamak için logları kontrol edin. Ray log dosyalarını bulmak için Ray'ın log dizinine bakabilirsiniz:
+-  Checking Ray Dashboard Logs
+Check the logs to understand why the Dashboard is not starting. You can find Ray log files in the Ray log directory:
 ```bash
 ls /tmp/ray/session_latest/logs/
 ```
 
-#### Dağıtık Script'in Mac Üzerinde Çalıştırılması
-script sadece Mac bilgisayarınızda bulunacak ve buradan çalıştırılacak. İşte dağıtık script'in tam adımları:
-1. Ray Cluster'ı Başlatma
-- Mac Üzerinde Ray Head Node'u Başlatma
+#### Running the Distributed Script on Mac
+The script will only be located on your Mac and executed from there. Here are the full steps for running the distributed script:
+1. Starting the Ray Cluster
+- Start the Ray Worker Node on the Ubuntu Virtual Machine
 ```bash
 ray stop
 ray start --head --node-ip-address=192.168.0.4 --port=6379 --dashboard-host 0.0.0.0
 ray start --head --node-ip-address=192.168.0.4 --port=6379 --dashboard-host 0.0.0.0 --dashboard-port 8265
 
 ```
-- Ubuntu Sanal Makinesinde Ray Worker Node'u Başlatma
+- Start the Ray Worker Node on the Ubuntu Virtual Machine
 ```bash
 ray start --address='192.168.0.4:6379'
 ```
-2. Dağıtık Python Script'ini Oluşturma ve Çalıştırma
-- distributed_tinyllama.py script'ini Mac bilgisayarınızda çalıştırarak 
+2. Creating and Running the Distributed Python Script
+- Run the distributed_tinyllama.py script on your Mac. 
 ```bash
 pip install git+https://github.com/ollama/ollama-python.git
 pip install llama-index-llms-ollama 
@@ -314,12 +314,14 @@ pip install llama-index qdrant_client torch transformers
 pip install llama_index
 ```
 
-3. Script'i Çalıştırma
+3. Executing the Script
+- Run the script and monitor the execution.
 ```bash
 echo "What is the use case of div tag in html?" | python distributed_tinyllama.py
 ```
 
-4. Ray Dashboard ve İzleme
+4. Ray Dashboard and Monitoring
+- Use the Ray Dashboard to track the execution and performance.
 ```bash
 http://192.168.0.4:8265
 ```
