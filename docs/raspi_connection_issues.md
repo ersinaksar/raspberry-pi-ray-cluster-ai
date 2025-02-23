@@ -1,26 +1,35 @@
-#### Raspberry Pi’nizin IP adresi görünmüyor olabilir veya bağlantıda bir sorun olabilir. 
-- Bağlantıyı doğrulamak ve tekrar denemek için aşağıdaki adımları izleyebilirsiniz:
-1. Raspberry Pi’yi Yeniden Başlatma
-	- Raspberry Pi’yi yeniden başlatın ve Ethernet kablosu ile Mac’e bağlı olduğundan emin olun.
-2. IP Adresini Tekrar Kontrol Etme
-	-	Terminal’de aşağıdaki komutu tekrar çalıştırarak bağlı cihazları kontrol edin:
+#### Your Raspberry Pi's IP Address May Not Be Visible or There May Be a Connection Issue  
+- Follow the steps below to verify the connection and try again:  
+
+1. **Restarting the Raspberry Pi**  
+   - Restart your Raspberry Pi and ensure it is connected to your Mac via an Ethernet cable.  
+
+2. **Checking the IP Address Again**  
+   - Run the following command in the terminal again to check connected devices:
+     
 ```bash
 arp -a
 ```
-3. mDNS Kullanarak Bağlanma
-	-	Raspberry Pi’niz station1.local adıyla da bağlanabilir. Aşağıdaki komutu den###eyin:
+3. **Connecting Using mDNS**  
+   - Your Raspberry Pi may also be accessible via **station1.local**. Try the following command:  
+
 ```bash
 ssh pi@station1.local
 ```
-4. IP Adresini Manuel Bulma
-	-	Eğer hala IP adresini bulamıyorsanız, Raspberry Pi’de şu komutu çalıştırarak IP adresini öğrenebilirsiniz:
+4. **Finding the IP Address Manually**  
+   - If you still cannot find the IP address, run the following command on your Raspberry Pi to retrieve it:  
+    
+
 ```bash
 hostname -I
 ```
-- Bu komut size Raspberry Pi’nin bağlı olduğu ağdaki IP adresini verecektir.
-5. IP Adresi ile Bağlanma
-	-	IP adresini öğrendikten sonra, Mac Terminal’de SSH ile bağlanmak için aşağıdaki komutu kullanın:
+- This command will display the IP address of your Raspberry Pi on the connected network. 
+5. **Connecting via IP Address**  
+   - Once you have retrieved the IP address, use the following command in the Mac Terminal to connect via SSH:  
+
 ```bash
 ssh pi@[bulduğunuz_ip_adresi]
 ```
-- Eğer bu adımlar sorunları çözmezse, bağlantıda başka bir problem olabilir. Bu durumda, bağladığınız kabloyu ve ağ ayarlarını tekrar kontrol edebilir ya da farklı bir yöntem (Wi-Fi ile bağlantı gibi) deneyebilirsiniz. Herhangi bir sorunda tekrar bana yazabilirsiniz.
+- If these steps do not resolve the issue, there might be another connection problem. In that case, check the cable connection and network settings again or try a different method, such as connecting via Wi-Fi.  
+
+   - Feel free to reach out if you need further assistance.  
