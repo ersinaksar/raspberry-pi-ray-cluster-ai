@@ -1,58 +1,58 @@
 #!/bin/bash
 
-# Raspberry Pi hostname ayarı
+# Raspberry Pi hostname settings
 set_hostname() {
     local NEW_HOSTNAME=$1
     echo "Setting hostname to $NEW_HOSTNAME..."
     
-    # Hostname dosyasını güncelleme
+    # update Hostname file
     echo $NEW_HOSTNAME | sudo tee /etc/hostname
     
-    # Hosts dosyasını güncelleme
+    # update Hosts file
     sudo sed -i "s/127.0.1.1.*/127.0.1.1\t$NEW_HOSTNAME/" /etc/hosts
     
-    # Hostname'i anında değiştirme
+    # change the Hostname directly
     sudo hostnamectl set-hostname $NEW_HOSTNAME
     
     echo "Hostname set to $NEW_HOSTNAME"
 }
 
-# mDNS ve Avahi kurulumu
+# mDNS and  Avahi setup
 install_avahi() {
     echo "Installing Avahi..."
     sudo apt-get update
     sudo apt-get install -y avahi-daemon
     
-    # Avahi hizmetini başlatma ve etkinleştirme
+    # start and activate  Avahi 
     sudo systemctl start avahi-daemon
     sudo systemctl enable avahi-daemon
     
     echo "Avahi installed and started"
 }
 
-# SSH konfigürasyonu
+# SSH configuration
 setup_ssh_config() {
     local HOSTNAME=$1
     local USER=$2
     
     echo "Setting up SSH config for $HOSTNAME..."
     
-    # SSH konfigürasyon dosyasına giriş ekleme
+    # add enter to SSH configuration file 
     SSH_CONFIG="$HOME/.ssh/config"
     
-    # .ssh dizinini oluşturma
+    # creadte .ssh folder
     if [ ! -d "$HOME/.ssh" ]; then
         mkdir "$HOME/.ssh"
         chmod 700 "$HOME/.ssh"
     fi
     
-    # SSH konfigürasyon dosyasını oluşturma
+    # creating SSH configuration file
     if [ ! -f "$SSH_CONFIG" ]; then
         touch "$SSH_CONFIG"
         chmod 600 "$SSH_CONFIG"
     fi
     
-    # SSH konfigürasyon dosyasına giriş ekleme
+    # ading enter to SSH configuratiom file
     grep -qxF "Host $HOSTNAME" "$SSH_CONFIG" || {
         echo "Host $HOSTNAME" >> "$SSH_CONFIG"
         echo "    HostName $HOSTNAME.local" >> "$SSH_CONFIG"
@@ -62,7 +62,7 @@ setup_ssh_config() {
     echo "SSH config set for $HOSTNAME"
 }
 
-# Raspberry Pi için ayarları yapma
+# settings for Raspberry Pi 
 configure_raspberry_pi() {
     local NEW_HOSTNAME=$1
     local USER=$2
@@ -72,7 +72,7 @@ configure_raspberry_pi() {
     setup_ssh_config $NEW_HOSTNAME $USER
 }
 
-# Ana fonksiyon
+# main function
 main() {
     if [ "$#" -ne 2 ]; then
         echo "Usage: $0 <hostname> <user>"
