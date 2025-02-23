@@ -7,7 +7,6 @@ Home-page: https://github.com/ray-project/ray
 Author: Ray Team
 Author-email: ray-dev@googlegroups.com
 License: Apache 2.0
-Location: /Users/ersinaksar/Documents/Development/Projects/work/raspberry/raspberry/.venv/lib/python3.10/site-packages
 Requires: aiosignal, click, filelock, frozenlist, jsonschema, msgpack, packaging, protobuf, pyyaml, requests
 Required-by: 
 ---
@@ -18,6 +17,5 @@ Home-page: https://ollama.ai
 Author: Ollama
 Author-email: hello@ollama.com
 License: MIT
-Location: /Users/ersinaksar/Documents/Development/Projects/work/raspberry/raspberry/.venv/lib/python3.10/site-packages
 Requires: httpx
 Required-by: llama-index-llms-ollama
